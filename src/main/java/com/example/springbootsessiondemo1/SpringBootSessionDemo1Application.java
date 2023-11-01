@@ -1,11 +1,13 @@
 package com.example.springbootsessiondemo1;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@MapperScan("com.example.springbootsessiondemo1.mapper")
 public class SpringBootSessionDemo1Application {
 
     public static void main(String[] args) {
