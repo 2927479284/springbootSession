@@ -27,6 +27,7 @@ public class AuthController {
         if (user.getPwd().equals(loginVo.getPwd())){
             //设置Session
             session.setAttribute("session", user.getUser() + user.getPwd());
+            System.out.println("登录成功");
             return AjaxResult.success("登录成功",user.getId());
         }
         return AjaxResult.error("账号密码错误");
@@ -40,6 +41,7 @@ public class AuthController {
     @GetMapping("info")
     public AjaxResult getInfo(@RequestParam("id") Long id){
         User user = userMapper.selectById(id);
+        System.out.println("获取成功");
         return AjaxResult.success("获取成功",user.getUser());
     }
 }

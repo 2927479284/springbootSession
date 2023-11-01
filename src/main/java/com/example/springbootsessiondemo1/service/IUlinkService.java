@@ -59,4 +59,6 @@ public interface IUlinkService
      * @return 结果
      */
     public int deleteUlinkById(Long id);
+
+    void updateStatus(Ulink ulink);
 }

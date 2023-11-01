@@ -1,11 +1,20 @@
+server:
+  port: 8080
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: 127.0.0.1:3306/spank?useUnicode=true&characterEncoding=utf-8
-    username: root
-    password: 123456
+    url: jdbc:mysql://127.0.0.1:3306/spank?useUnicode=true&characterEncoding=utf-8
+    username: spanking
+    password: infatuation.cn
     type: com.alibaba.druid.pool.DruidDataSource
 
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/spank?useUnicode=true&characterEncoding=utf-8
+#    username: root
+#    password: 123456
+#    type: com.alibaba.druid.pool.DruidDataSource
 
 
 # MyBatis Plus配置
@@ -15,4 +24,11 @@ mybatis-plus:
   # 配置mapper的扫描，找到所有的mapper.xml映射文件
   mapperLocations: classpath*:mapper/**/*Mapper.xml
   # 加载全局的配置文件
+
 #   configLocation: classpath:mybatis/mybatis-config.xml
+
+# 日志配置
+logging:
+  level:
+    com.ruoyi: debug
+    org.springframework: warn

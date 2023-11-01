@@ -59,4 +59,6 @@ public interface IGaoziService
      * @return 结果
      */
     public int deleteGaoziById(Long id);
+
+    void updateStatus(Gaozi gaozi);
 }

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springbootsessiondemo1.mapper.GaoziMapper">
+    
+    <resultMap type="com.example.springbootsessiondemo1.domain.entity.Gaozi" id="GaoziResult">
+        <result property="id"    column="id"    />
+        <result property="city"    column="city"    />
+        <result property="type"    column="type"    />
+        <result property="name"    column="name"    />
+        <result property="age"    column="age"    />
+        <result property="qage"    column="qage"    />
+        <result property="Introduction"    column="Introduction"    />
+        <result property="content"    column="content"    />
+        <result property="imgUrl"    column="imgUrl"    />
+        <result property="status"    column="status"    />
+        <result property="url"    column="url"    />
+    </resultMap>
+
+    <sql id="selectGaoziVo">
+        select id, city, type, name, age, qage, Introduction, content, imgUrl, status, url from gaozi
+    </sql>
+
+    <select id="selectGaoziList" parameterType="Gaozi" resultMap="GaoziResult">
+        <include refid="selectGaoziVo"/>
+        <where>  
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="age != null "> and age = #{age}</if>
+            <if test="qage != null "> and qage = #{qage}</if>
+            <if test="Introduction != null  and Introduction != ''"> and Introduction = #{Introduction}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="imgUrl != null  and imgUrl != ''"> and imgUrl = #{imgUrl}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+        </where>
+    </select>
+    
+    <select id="selectGaoziById" parameterType="Long" resultMap="GaoziResult">
+        <include refid="selectGaoziVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertGaozi" parameterType="Gaozi" useGeneratedKeys="true" keyProperty="id">
+        insert into gaozi
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="city != null and city != ''">city,</if>
+            <if test="type != null and type != ''">type,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="age != null">age,</if>
+            <if test="qage != null">qage,</if>
+            <if test="Introduction != null and Introduction != ''">Introduction,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="imgUrl != null and imgUrl != ''">imgUrl,</if>
+            <if test="status != null">status,</if>
+            <if test="url != null and url != ''">url,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="city != null and city != ''">#{city},</if>
+            <if test="type != null and type != ''">#{type},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="age != null">#{age},</if>
+            <if test="qage != null">#{qage},</if>
+            <if test="Introduction != null and Introduction != ''">#{Introduction},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="imgUrl != null and imgUrl != ''">#{imgUrl},</if>
+            <if test="status != null">#{status},</if>
+            <if test="url != null and url != ''">#{url},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGaozi" parameterType="Gaozi">
+        update gaozi
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="city != null and city != ''">city = #{city},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="qage != null">qage = #{qage},</if>
+            <if test="Introduction != null and Introduction != ''">Introduction = #{Introduction},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
+            <if test="imgUrl != null and imgUrl != ''">imgUrl = #{imgUrl},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="url != null and url != ''">url = #{url},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteGaoziById" parameterType="Long">
+        delete from gaozi where id = #{id}
+    </delete>
+
+    <delete id="deleteGaoziByIds" parameterType="String">
+        delete from gaozi where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

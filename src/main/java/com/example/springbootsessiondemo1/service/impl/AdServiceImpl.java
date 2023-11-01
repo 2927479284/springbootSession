@@ -91,4 +91,10 @@ public class AdServiceImpl implements IAdService
     {
         return adMapper.deleteAdById(id);
     }
+
+
+    @Override
+    public void updateStatus(Ad ad) {
+        adMapper.updateById(ad);
+    }
 }

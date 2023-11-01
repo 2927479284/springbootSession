@@ -91,4 +91,9 @@ public class GaoziServiceImpl implements IGaoziService
     {
         return gaoziMapper.deleteGaoziById(id);
     }
+
+    @Override
+    public void updateStatus(Gaozi gaozi) {
+        gaoziMapper.updateGaozi(gaozi);
+    }
 }

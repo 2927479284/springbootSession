@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springbootsessiondemo1.mapper.UlinkMapper">
+    
+    <resultMap type="Ulink" id="UlinkResult">
+        <result property="id"    column="id"    />
+        <result property="url"    column="url"    />
+        <result property="name"    column="name"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectUlinkVo">
+        select id, url, name, status from ulink
+    </sql>
+
+    <select id="selectUlinkList" parameterType="Ulink" resultMap="UlinkResult">
+        <include refid="selectUlinkVo"/>
+        <where>  
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectUlinkById" parameterType="Long" resultMap="UlinkResult">
+        <include refid="selectUlinkVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUlink" parameterType="Ulink" useGeneratedKeys="true" keyProperty="id">
+        insert into ulink
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="url != null and url != ''">url,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="url != null and url != ''">#{url},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUlink" parameterType="Ulink">
+        update ulink
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="url != null and url != ''">url = #{url},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUlinkById" parameterType="Long">
+        delete from ulink where id = #{id}
+    </delete>
+
+    <delete id="deleteUlinkByIds" parameterType="String">
+        delete from ulink where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

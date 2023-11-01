@@ -70,10 +70,16 @@ public class AdController
      */
     
     
+//    @PostMapping
+//    public AjaxResult add(@RequestBody Ad ad)
+//    {
+//        adService.insertAd(ad);
+//        return success();
+//    }
     @PostMapping
-    public AjaxResult add(@RequestBody Ad ad)
+    public AjaxResult updateStatus(@RequestBody Ad ad)
     {
-        adService.insertAd(ad);
+        adService.updateStatus(ad);
         return success();
     }
 

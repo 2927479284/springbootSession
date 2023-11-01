@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springbootsessiondemo1.mapper.GroupMapper">
+    
+    <resultMap type="Group" id="GroupResult">
+        <result property="id"    column="id"    />
+        <result property="city"    column="city"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="content"    column="content"    />
+        <result property="imgUrl"    column="imgUrl"    />
+        <result property="status"    column="status"    />
+        <result property="url"    column="url"    />
+    </resultMap>
+
+    <sql id="selectGroupVo">
+        select id, city, name, type, content, imgUrl, status, url from group_
+    </sql>
+
+    <select id="selectGroupList" parameterType="Group" resultMap="GroupResult">
+        <include refid="selectGroupVo"/>
+        <where>  
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="imgUrl != null  and imgUrl != ''"> and imgUrl = #{imgUrl}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+        </where>
+    </select>
+    
+    <select id="selectGroupById" parameterType="Long" resultMap="GroupResult">
+        <include refid="selectGroupVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertGroup" parameterType="Group" useGeneratedKeys="true" keyProperty="id">
+        insert into group_
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="city != null and city != ''">city,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="type != null and type != ''">type,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="imgUrl != null and imgUrl != ''">imgUrl,</if>
+            <if test="status != null">status,</if>
+            <if test="url != null and url != ''">url,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="city != null and city != ''">#{city},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="type != null and type != ''">#{type},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="imgUrl != null and imgUrl != ''">#{imgUrl},</if>
+            <if test="status != null">#{status},</if>
+            <if test="url != null and url != ''">#{url},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGroup" parameterType="Group">
+        update group_
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="city != null and city != ''">city = #{city},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
+            <if test="imgUrl != null and imgUrl != ''">imgUrl = #{imgUrl},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="url != null and url != ''">url = #{url},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteGroupById" parameterType="Long">
+        delete from group_ where id = #{id}
+    </delete>
+
+    <delete id="deleteGroupByIds" parameterType="String">
+        delete from group_ where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

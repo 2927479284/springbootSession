@@ -59,4 +59,6 @@ public interface IGroupService
      * @return 结果
      */
     public int deleteGroupById(Long id);
+
+    void updateStatus(Group group);
 }

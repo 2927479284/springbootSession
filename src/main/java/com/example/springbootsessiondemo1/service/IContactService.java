@@ -59,4 +59,6 @@ public interface IContactService
      * @return 结果
      */
     public int deleteContactById(Long id);
+
+    void updateStatus(Contact contact);
 }

@@ -91,4 +91,10 @@ public class UlinkServiceImpl implements IUlinkService
     {
         return ulinkMapper.deleteUlinkById(id);
     }
+
+
+    @Override
+    public void updateStatus(Ulink ulink) {
+        ulinkMapper.updateById(ulink);
+    }
 }

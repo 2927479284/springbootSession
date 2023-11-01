@@ -3,6 +3,7 @@ package com.example.springbootsessiondemo1.controller;
 import java.util.List;
 
 import com.example.springbootsessiondemo1.common.AjaxResult;
+import com.example.springbootsessiondemo1.domain.entity.Ad;
 import com.example.springbootsessiondemo1.domain.entity.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,10 +57,16 @@ public class ContactController
      */
     
     
+//    @PostMapping
+//    public AjaxResult add(@RequestBody Contact contact)
+//    {
+//        contactService.insertContact(contact);
+//        return success();
+//    }
     @PostMapping
-    public AjaxResult add(@RequestBody Contact contact)
+    public AjaxResult updateStatus(@RequestBody Contact contact)
     {
-        contactService.insertContact(contact);
+        contactService.updateStatus(contact);
         return success();
     }
 

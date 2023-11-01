@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springbootsessiondemo1.mapper.ContactMapper">
+    
+    <resultMap type="Contact" id="ContactResult">
+        <result property="id"    column="id"    />
+        <result property="contnet"    column="contnet"    />
+        <result property="type"    column="type"    />
+    </resultMap>
+
+    <sql id="selectContactVo">
+        select id, contnet, type from contact
+    </sql>
+
+    <select id="selectContactList" parameterType="Contact" resultMap="ContactResult">
+        <include refid="selectContactVo"/>
+        <where>  
+            <if test="contnet != null  and contnet != ''"> and contnet = #{contnet}</if>
+            <if test="type != null "> and type = #{type}</if>
+        </where>
+    </select>
+    
+    <select id="selectContactById" parameterType="Long" resultMap="ContactResult">
+        <include refid="selectContactVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertContact" parameterType="Contact" useGeneratedKeys="true" keyProperty="id">
+        insert into contact
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="contnet != null and contnet != ''">contnet,</if>
+            <if test="type != null">type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="contnet != null and contnet != ''">#{contnet},</if>
+            <if test="type != null">#{type},</if>
+         </trim>
+    </insert>
+
+    <update id="updateContact" parameterType="Contact">
+        update contact
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="contnet != null and contnet != ''">contnet = #{contnet},</if>
+            <if test="type != null">type = #{type},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteContactById" parameterType="Long">
+        delete from contact where id = #{id}
+    </delete>
+
+    <delete id="deleteContactByIds" parameterType="String">
+        delete from contact where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -11,7 +11,7 @@
     <groupId>com.example</groupId>
     <artifactId>springBootSessionDemo1</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>springBootSessionDemo1</name>
+    <name>spank</name>
     <description>springBootSessionDemo1</description>
     <properties>
         <java.version>1.8</java.version>

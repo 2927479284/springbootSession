@@ -1,8 +1,81 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springbootsessiondemo1.mapper.AdMapper">
+    
+    <resultMap type="Ad" id="AdResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="imgurl1"    column="imgurl1"    />
+        <result property="imgurl2"    column="imgurl2"    />
+        <result property="status"    column="status"    />
+        <result property="url1"    column="url1"    />
+        <result property="url2"    column="url2"    />
+    </resultMap>
 
+    <sql id="selectAdVo">
+        select id, name, imgurl1, imgurl2, status, url1, url2 from ad
+    </sql>
 
+    <select id="selectAdList" parameterType="Ad" resultMap="AdResult">
+        <include refid="selectAdVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="imgurl1 != null  and imgurl1 != ''"> and imgurl1 = #{imgurl1}</if>
+            <if test="imgurl2 != null  and imgurl2 != ''"> and imgurl2 = #{imgurl2}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="url1 != null  and url1 != ''"> and url1 = #{url1}</if>
+            <if test="url2 != null  and url2 != ''"> and url2 = #{url2}</if>
+        </where>
+    </select>
+    
+    <select id="selectAdById" parameterType="Long" resultMap="AdResult">
+        <include refid="selectAdVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAd" parameterType="Ad" useGeneratedKeys="true" keyProperty="id">
+        insert into ad
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="imgurl1 != null and imgurl1 != ''">imgurl1,</if>
+            <if test="imgurl2 != null and imgurl2 != ''">imgurl2,</if>
+            <if test="status != null">status,</if>
+            <if test="url1 != null and url1 != ''">url1,</if>
+            <if test="url2 != null and url2 != ''">url2,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="imgurl1 != null and imgurl1 != ''">#{imgurl1},</if>
+            <if test="imgurl2 != null and imgurl2 != ''">#{imgurl2},</if>
+            <if test="status != null">#{status},</if>
+            <if test="url1 != null and url1 != ''">#{url1},</if>
+            <if test="url2 != null and url2 != ''">#{url2},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAd" parameterType="Ad">
+        update ad
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="imgurl1 != null and imgurl1 != ''">imgurl1 = #{imgurl1},</if>
+            <if test="imgurl2 != null and imgurl2 != ''">imgurl2 = #{imgurl2},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="url1 != null and url1 != ''">url1 = #{url1},</if>
+            <if test="url2 != null and url2 != ''">url2 = #{url2},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAdById" parameterType="Long">
+        delete from ad where id = #{id}
+    </delete>
+
+    <delete id="deleteAdByIds" parameterType="String">
+        delete from ad where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

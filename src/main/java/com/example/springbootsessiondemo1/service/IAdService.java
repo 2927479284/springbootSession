@@ -59,4 +59,10 @@ public interface IAdService
      * @return 结果
      */
     public int deleteAdById(Long id);
+
+    /**
+     * 修改广告数据状态
+     * @param ad
+     */
+    void updateStatus(Ad ad);
 }

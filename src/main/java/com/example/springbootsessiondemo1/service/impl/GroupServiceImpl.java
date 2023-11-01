@@ -91,4 +91,9 @@ public class GroupServiceImpl implements IGroupService
     {
         return groupMapper.deleteGroupById(id);
     }
+
+    @Override
+    public void updateStatus(Group group) {
+        groupMapper.updateById(group);
+    }
 }

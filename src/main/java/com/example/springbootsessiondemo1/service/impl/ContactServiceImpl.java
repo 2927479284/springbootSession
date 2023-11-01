@@ -91,4 +91,10 @@ public class ContactServiceImpl implements IContactService
     {
         return contactMapper.deleteContactById(id);
     }
+
+
+    @Override
+    public void updateStatus(Contact contact) {
+        contactMapper.updateById(contact);
+    }
 }
