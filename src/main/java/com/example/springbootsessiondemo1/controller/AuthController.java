@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 /**
  * 用户认证
  */
-@RequestMapping("auth/")
+@RequestMapping("/auth/")
 @RestController
 public class AuthController {
 
