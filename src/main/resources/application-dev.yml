@@ -43,4 +43,4 @@ logging:
 
 file:
   storage:
-    path: C:\Users\xiaoyong\Desktop\files
+    path: /home/ZhangYOng/IdeaProjects/spank/files/
